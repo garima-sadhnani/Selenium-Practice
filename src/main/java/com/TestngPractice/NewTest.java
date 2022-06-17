@@ -50,7 +50,7 @@ public class NewTest {
 		//		  driver.findElement(By.linkText("Yes please!")).click();
 		driver.findElement(By.id("at-cv-lightbox-close")).click();
 	}
-	/*
+	
 	@Test
 	  public void test1() throws InterruptedException {
 
@@ -72,7 +72,7 @@ public class NewTest {
 		  System.out.println(message);
 	  }
 
-
+	/*
 	  @Test
 	  public void test2() throws InterruptedException {
 		  driver.findElement(By.linkText("Input Forms")).click();
