@@ -5,7 +5,7 @@
     <classes>
       <class name="com.TestngPractice.NewTest">
         <methods>
-          <include name="test6"/>
+          <include name="test1"/>
           <include name="setUp"/>
           <include name="tearDown"/>
         </methods>

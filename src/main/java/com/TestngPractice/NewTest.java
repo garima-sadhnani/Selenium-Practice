@@ -8,12 +8,15 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,7 +29,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.AssertJUnit;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.Assertion;
 
 public class NewTest {
 
@@ -52,7 +57,7 @@ public class NewTest {
 	}
 	
 	@Test
-	  public void test1() throws InterruptedException {
+	  public void test1() throws InterruptedException, IOException {
 
 //		  Get title of web page
 		  String pageTitle = driver.getTitle();
@@ -68,11 +73,17 @@ public class NewTest {
 		  String expectedMessage= "My name is Garima";
 
 //		  Checks equality
-		  AssertJUnit.assertEquals(message, expectedMessage);
+//		  Asserts are of 2 types in testNG: hard & soft assert
+		  Assertion hardAssert= new Assertion();
+		  hardAssert.assertEquals(message, expectedMessage);
 		  System.out.println(message);
+		  
+//		  Taking screenshot
+		  File scrnsht= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		  FileUtils.copyFile(scrnsht, new File("C:\\Users\\garim\\OneDrive\\Pictures\\Screenshots\\Image.png"));
 	  }
 
-	/*
+	/////////////////////
 	  @Test
 	  public void test2() throws InterruptedException {
 		  driver.findElement(By.linkText("Input Forms")).click();
@@ -87,7 +98,8 @@ public class NewTest {
 		  String expectedMessage= "Day selected :- Tuesday";
 
 //		  Checks equality
-		  AssertJUnit.assertEquals(message, expectedMessage);
+		  Assertion hardAssert= new Assertion();
+		  hardAssert.assertEquals(message, expectedMessage);
 		  System.out.println(message);
 	  }
 
@@ -162,7 +174,7 @@ public class NewTest {
 		  else {
 			  System.out.println("Drag and Drop Unsuccessful");
 		  }
-	 */
+	  }
 	@Test
 	public void test6() throws IOException, InterruptedException {
 		driver.findElement(By.linkText("Input Forms")).click();
@@ -206,6 +218,27 @@ public class NewTest {
 		FileOutputStream fout= new FileOutputStream(file);
 		workbook.write(fout);
 		workbook.close();
+	}
+	////////////
+	
+	@Test(dataProvider = "credentials")
+	public void test7(String usr, String pwd) {
+		System.out.println(usr);
+		System.out.println(pwd);
+	}
+	
+	@DataProvider(name="credentials")
+	public Object[][] getData(){
+		
+		Object[][] data= new Object[3][2];
+		data[0][0]= "donhere";
+		data[0][1]= "don123";
+		data[1][0]= "donhere1";
+		data[1][1]= "don123";
+		data[2][0]= "donhere2";
+		data[2][1]= "don123";
+		
+		return data;
 	}
 	@AfterTest
 	public void tearDown() {
